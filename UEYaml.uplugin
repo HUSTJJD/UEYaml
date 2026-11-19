@@ -1,0 +1,25 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "UEYaml",
+	"Description": "Shared YAML text <-> FJsonObject adapter for the AnnBuildTools plugins, backed by rapidyaml.",
+	"Category": "Other",
+	"CreatedBy": "AnnBuildTools",
+	"CanContainContent": false,
+	"Installed": false,
+	"SupportedTargetPlatforms": [
+		"Win64",
+		"Mac",
+		"Linux",
+		"Android",
+		"IOS"
+	],
+	"Modules": [
+		{
+			"Name": "UEYaml",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
