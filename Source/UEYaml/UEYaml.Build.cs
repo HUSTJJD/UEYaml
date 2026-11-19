@@ -32,10 +32,13 @@ public class UEYaml : ModuleRules
 		// ModuleDirectory is <Plugin>/Source/UEYaml, so ../.. reaches <Plugin>.
 		PrivateIncludePaths.Add(Path.Combine(ModuleDirectory, "..", "..", "ThirdParty", "RapidYaml"));
 
-		// Unreal builds with C++ exceptions disabled. rapidyaml is
-		// exception-agnostic; keep its default error callbacks on the abort
-		// path rather than the throwing path (which would not compile here).
-		PublicDefinitions.Add("RYML_DEFAULT_CALLBACK_USES_EXCEPTIONS=0");
-		PublicDefinitions.Add("C4CORE_DEFAULT_CALLBACK_USES_EXCEPTIONS=0");
+		// Unreal builds with C++ exceptions disabled. rapidyaml's
+		// RYML_DEFAULT_CALLBACK_USES_EXCEPTIONS is tested with #ifdef (not by
+		// value) and is UNDEFINED by default -> the default error callback
+		// aborts instead of throwing std::runtime_error. Do NOT define it here,
+		// not even as "=0": defining it would enable the throwing path and
+		// fail to compile with /EHs-c-. See the malformed-input note in
+		// Public/UEYaml.h; ParseStream isolates documents to limit the blast
+		// radius of a bad document.
 	}
 }
