@@ -9,12 +9,22 @@
 
 #include "UEYaml.h"
 
-#include "ryml_all.hpp"
-
 #include "Dom/JsonValue.h"
 #include "Misc/FileHelper.h"
 
 #include <string>
+
+// Keep EVERY Unreal header above this line. rapidyaml/c4core pull in platform
+// headers that reintroduce macros UE normally undefines (e.g. Yield), which
+// otherwise breaks FPlatformProcess::Yield() in GenericPlatformProcess.h.
+//
+// UE's CoreDefines.h also defines DEFAULTS as 0, while rapidyaml declares
+// c4::yml::ParserOptions::DEFAULTS as an enumerator. Scoped push/undef/pop
+// prevents "DEFAULTS = SCALAR_FILTERING" from expanding to "0 = ...".
+#pragma push_macro("DEFAULTS")
+#undef DEFAULTS
+#include "ryml_all.hpp"
+#pragma pop_macro("DEFAULTS")
 
 namespace UEYaml
 {

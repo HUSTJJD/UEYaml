@@ -1,0 +1,20 @@
+# Unreal Engine build artifacts (never commit)
+Binaries/
+Intermediate/
+DerivedDataCache/
+Saved/
+
+# IDE / local tooling
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.user
+*.sln.DotSettings.user
+
+# Python / OS noise
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

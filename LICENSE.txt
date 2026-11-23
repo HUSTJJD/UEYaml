@@ -28,3 +28,13 @@ License; its full text is in ThirdParty/RapidYaml/LICENSE.txt.
 
 Upstream: https://github.com/biojppm/rapidyaml
 Copyright (c) 2018, Joao Paulo Magalhaes <dev@jpmag.me>
+
+--------------------------------------------------------------------------
+
+Local patch applied to ThirdParty/RapidYaml/ryml_all.hpp (v0.9.0):
+UE 6 / BuildSettingsVersion.V9 promotes MSVC C4800 (implicit conversion of
+c4::yml::id_type to bool) to an error. Four call sites in the Emitter templates
+now use an explicit "!= 0" comparison, semantically identical to the implicit
+conversion. Lines: _do_visit_block_container(id, 0, ilevel, ...),
+_indent(ilevel, ...) x2, _do_visit_block_container(node, depth, ...).
+Re-apply this patch if the amalgamated header is regenerated upstream.

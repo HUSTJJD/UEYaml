@@ -27134,7 +27134,7 @@ void Emitter<Writer>::_emit_yaml(id_type id)
                 this->Writer::_do_write(":\n");
                 ++ilevel;
             }
-            _do_visit_block_container(id, 0, ilevel, ilevel);
+            _do_visit_block_container(id, 0, ilevel, ilevel != 0);
             return;
         }
     }
@@ -27537,14 +27537,14 @@ void Emitter<Writer>::_do_visit_block(id_type node, id_type depth, id_type ileve
         bool nl = false;  // write a newline
         if(m_tree->has_key(node))
         {
-            _indent(ilevel, do_indent);
+            _indent(ilevel, do_indent != 0);
             _writek(node, ilevel);
             this->Writer::_do_write(':');
             spc = true;
         }
         else if(!m_tree->is_root(node))
         {
-            _indent(ilevel, do_indent);
+            _indent(ilevel, do_indent != 0);
             this->Writer::_do_write('-');
             spc = true;
         }
@@ -27600,7 +27600,7 @@ void Emitter<Writer>::_do_visit_block(id_type node, id_type depth, id_type ileve
     if(m_tree->is_root(node) || m_tree->is_doc(node))
         next_level = ilevel; // do not indent at top level
 
-    _do_visit_block_container(node, depth, next_level, do_indent);
+    _do_visit_block_container(node, depth, next_level, do_indent != 0);
 }
 
 C4_SUPPRESS_WARNING_MSVC_POP
