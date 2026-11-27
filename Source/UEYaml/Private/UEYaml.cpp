@@ -62,7 +62,10 @@ namespace UEYaml
 				case TEXT('\r'): Out += TEXT("\\r"); break;
 				case TEXT('\t'): Out += TEXT("\\t"); break;
 				default:
-					if (Ch < 0x20)
+					// YAML forbids C0 (0x00-0x1F) and C1 (0x7F-0x9F) control
+					// characters even inside double-quoted scalars; PyYAML's
+					// Reader rejects U+008A, which used to abort a whole stream.
+					if (Ch < 0x20 || (Ch >= 0x7F && Ch <= 0x9F))
 					{
 						Out += TEXT("\\u00");
 						Out.AppendChar(Hex[(Ch >> 4) & 0xF]);
